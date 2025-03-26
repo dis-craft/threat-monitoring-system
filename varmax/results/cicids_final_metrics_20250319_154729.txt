@@ -1,0 +1,6 @@
+Final Evaluation Metrics for cicids:
+loss: 0.3285
+accuracy: 0.9173
+precision: 0.9007
+recall: 0.9173
+f1: 0.8849

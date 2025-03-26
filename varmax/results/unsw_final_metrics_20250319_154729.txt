@@ -1,0 +1,6 @@
+Final Evaluation Metrics for unsw:
+loss: 0.1674
+accuracy: 0.9248
+precision: 0.9264
+recall: 0.9248
+f1: 0.9247

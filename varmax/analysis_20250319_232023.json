@@ -1,0 +1,50 @@
+{
+  "dataset": "unsw",
+  "total_records": 10,
+  "analysis_time": 3.17,
+  "threat_distribution": {
+    "counts": {
+      "Normal": 9,
+      "Anomaly": 1,
+      "Zero-Day": 0
+    },
+    "percentages": {
+      "Normal": 90.0,
+      "Anomaly": 10.0,
+      "Zero-Day": 0.0
+    }
+  },
+  "risk_assessment": "MEDIUM RISK - Multiple Anomalies Detected",
+  "detailed_threats": [
+    {
+      "id": 5,
+      "type": "Anomaly",
+      "confidence": 0.0,
+      "severity": "MEDIUM",
+      "features": null,
+      "record": {
+        "feature_0": 0.2928771073225973,
+        "feature_1": 0.13969065096285316,
+        "feature_2": 0.40116245298464237,
+        "feature_3": 0.7399136546885057,
+        "feature_4": 0.16311228903339547,
+        "feature_5": 0.8951926698802561,
+        "feature_6": 0.11564893708058122,
+        "feature_7": 0.5166524253817852,
+        "feature_8": 0.7676274558279402,
+        "feature_9": 0.5072964442160938,
+        "feature_10": 0.35080068671512854,
+        "feature_11": 0.7239069942332275,
+        "feature_12": 0.708267539916983,
+        "feature_13": 0.7882972527773103,
+        "feature_14": 0.9585553686051705,
+        "feature_15": 0.8396126782986061,
+        "feature_16": 0.45247514321055937,
+        "feature_17": 0.8889502368444504,
+        "feature_18": 0.3790671315381391,
+        "feature_19": 0.38691789735317794,
+        "label": 1.0
+      }
+    }
+  ]
+}

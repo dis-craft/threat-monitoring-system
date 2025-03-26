@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Monitoring Dashboard - Zomato Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/security_log.css') }}">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <h1><i class="fas fa-shield-alt"></i> Zomato Security Monitoring</h1>
+                <div class="nav-links">
+                    <a href="{{ url_for('main.dashboard') }}"><i class="fas fa-home"></i> Dashboard</a>
+                    <a href="{{ url_for('admin.admin_dashboard') }}"><i class="fas fa-user-shield"></i> Admin Panel</a>
+                    <a href="{{ url_for('admin.security_scan') }}"><i class="fas fa-chart-bar"></i> Scan Results</a>
+                    <a href="{{ url_for('auth.logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="card" style="margin-top: 20px;">
+            <div class="card-header">
+                <h2 class="card-title"><i class="fas fa-terminal"></i> Live Vulnerability Detection</h2>
+                <div class="dashboard-controls">
+                    <button id="start-scan-btn" class="action-button"><i class="fas fa-play"></i> Start Scan</button>
+                    <button id="stop-scan-btn" class="action-button danger" disabled><i class="fas fa-stop"></i> Stop Scan</button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="real-time-stats">
+                    <div class="stat-card">
+                        <h3>High Risk</h3>
+                        <div id="high-risk-count" class="stat-number" style="color: #d32f2f;">0</div>
+                        <p>Critical</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Medium Risk</h3>
+                        <div id="medium-risk-count" class="stat-number" style="color: #f57c00;">0</div>
+                        <p>Significant</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Low Risk</h3>
+                        <div id="low-risk-count" class="stat-number" style="color: #fbc02d;">0</div>
+                        <p>Minor</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Info</h3>
+                        <div id="info-count" class="stat-number" style="color: #1976d2;">0</div>
+                        <p>Informational</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Total</h3>
+                        <div id="total-count" class="stat-number">0</div>
+                        <p>Vulnerabilities</p>
+                    </div>
+                </div>
+
+                <div class="progress-container">
+                    <p><strong>Scan Status:</strong> <span id="scan-status-text">Ready</span></p>
+                    <div class="progress-bar">
+                        <div id="progress-bar-inner" class="progress-bar-inner" style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="scan-targets">
+                        <h3>Scan Targets</h3>
+                        <p><strong>Current Target:</strong> <span id="target-info">{{ request.host_url }}</span></p>
+                        <ul class="target-list">
+                            <li class="active" data-target="{{ request.host_url }}"><i class="fas fa-globe"></i> Local Application</li>
+                            <li data-target="{{ request.host_url }}login"><i class="fas fa-sign-in-alt"></i> Login Page</li>
+                            <li data-target="{{ request.host_url }}admin"><i class="fas fa-user-shield"></i> Admin Panel</li>
+                            <li data-target="{{ request.host_url }}api/users"><i class="fas fa-users"></i> User API</li>
+                            <li data-target="{{ request.host_url }}api/orders"><i class="fas fa-utensils"></i> Orders API</li>
+                        </ul>
+                        
+                        <h3 style="margin-top: 20px;">Discovered Endpoints</h3>
+                        <ul id="endpoint-list" class="target-list">
+                            <li><i class="fas fa-link"></i> No endpoints discovered yet</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="logs-container">
+                        <div class="logs-header">
+                            <h3 class="logs-title"><i class="fas fa-list"></i> Live Detection Log</h3>
+                            <div class="logs-actions">
+                                <button id="clear-logs-btn" title="Clear Logs"><i class="fas fa-trash"></i></button>
+                                <button id="download-logs-btn" title="Download Logs"><i class="fas fa-download"></i></button>
+                            </div>
+                        </div>
+                        <div id="log-window" class="log-window">
+                            <!-- Logs will be dynamically inserted here -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="vulnerability-container" class="vulnerability-details" style="display: none;">
+                    <div id="vulnerability-title" class="vulnerability-title">
+                        <i class="fas fa-bug"></i>
+                        <h3>Vulnerability Details</h3>
+                    </div>
+                    
+                    <div id="url-section" class="vulnerability-section">
+                        <h4>Target URL</h4>
+                        <pre>Loading...</pre>
+                    </div>
+                    
+                    <div id="description-section" class="vulnerability-section">
+                        <h4>Description</h4>
+                        <pre>Loading...</pre>
+                    </div>
+                    
+                    <div id="evidence-section" class="vulnerability-section">
+                        <h4>Evidence</h4>
+                        <pre>Loading...</pre>
+                    </div>
+                    
+                    <div id="solution-section" class="vulnerability-section">
+                        <h4>Solution</h4>
+                        <pre>Loading...</pre>
+                    </div>
+                    
+                    <div id="cwe-section" class="vulnerability-section">
+                        <h4>CWE ID</h4>
+                        <pre>Loading...</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer style="text-align: center; margin-top: 30px; padding: 20px; color: #666; border-top: 1px solid #eee;">
+        <div class="container">
+            <p>OWASP ZAP Security Monitoring | Zomato Security Team</p>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='security_log.js') }}"></script>
+</body>
+</html> 

@@ -1,0 +1,26 @@
+{
+  "dataset": "data/UNSW_NB15_test_preprocessed.csv",
+  "dataset_name": "unsw",
+  "max_samples": 10,
+  "timestamp": "20250319_232023",
+  "original": {
+    "time": 0.01500558853149414,
+    "threat_types": {
+      "Normal": 0,
+      "Anomaly": 0,
+      "Zero-Day Attack": 0
+    },
+    "risk": "LOW RISK",
+    "error": "Failed to run"
+  },
+  "pyod": {
+    "time": 3.1724069118499756,
+    "threat_types": {
+      "Normal": 9,
+      "Anomaly": 1,
+      "Zero-Day": 0
+    },
+    "risk": "MEDIUM RISK - Multiple Anomalies Detected",
+    "error": null
+  }
+}

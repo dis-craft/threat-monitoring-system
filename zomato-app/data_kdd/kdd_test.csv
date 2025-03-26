@@ -1,0 +1,11 @@
+duration,protocol_type,service,flag,src_bytes,dst_bytes,land,wrong_fragment,urgent,hot,num_failed_logins,logged_in,num_compromised,root_shell,su_attempted,num_root,num_file_creations,num_shells,num_access_files,num_outbound_cmds,is_host_login,is_guest_login,count,srv_count,serror_rate,srv_serror_rate,rerror_rate,srv_rerror_rate,same_srv_rate,diff_srv_rate,srv_diff_host_rate,dst_host_count,dst_host_srv_count,dst_host_same_srv_rate,dst_host_diff_srv_rate,dst_host_same_src_port_rate,dst_host_srv_diff_host_rate,dst_host_serror_rate,dst_host_srv_serror_rate,dst_host_rerror_rate,dst_host_srv_rerror_rate
+0,tcp,http,SF,181,5450,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,8,8,0,0,0,0,1,0,0,9,9,1,0,0.11,0,0,0,0,0
+30,tcp,ftp,SF,8291,110,0,0,0,1,0,1,0,0,0,0,1,0,0,0,0,0,1,2,0,0,0,0,0.5,0.5,1,4,1,0.25,0.5,0.25,1,0,0,0,0
+31,tcp,telnet,SF,217,2032,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,5,5,0,0,0,0,1,0,0,1,1,1,0,1,0,0,0,0,0
+0,udp,private,SF,105,146,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,1,0,0,255,1,0,0.39,0,0,0,0,0,0
+500,tcp,private,REJ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,121,219,1,1,0,0,0.55,0.45,0.19,255,37,0.15,0.14,0.16,0.11,1,1,0,0
+350,tcp,http,S0,200,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,150,150,0.9,0.9,0,0,1,0,0,255,150,1,0,0.1,0,0.9,0.9,0,0
+425,tcp,ftp_data,REJ,150000,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,120,220,0.8,0.8,0,0,0.55,0.45,0.2,255,40,0.15,0.85,0.15,0.1,0.8,0.8,0,0
+310,tcp,finger,SF,120000,250000,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,5,5,0,0,0,0,1,0,0,20,20,1,0,0.5,0,0,0,0,0
+100,tcp,private,S0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,121,219,0.75,0.75,0,0,0.55,0.45,0.19,255,37,0.15,0.14,0.16,0.11,0.75,0.75,0,0
+200,tcp,mtp,SF,10000,20000,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,10,10,0,0,0,0,1,0,0,30,30,1,0,0.33,0,0,0,0,0 

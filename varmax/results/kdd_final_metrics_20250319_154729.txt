@@ -1,0 +1,6 @@
+Final Evaluation Metrics for kdd:
+loss: 0.0860
+accuracy: 0.9804
+precision: 0.9806
+recall: 0.9804
+f1: 0.9803

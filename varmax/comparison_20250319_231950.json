@@ -1,0 +1,26 @@
+{
+  "dataset": "data/KDD_Test_preprocessed.csv",
+  "dataset_name": "kdd",
+  "max_samples": 10,
+  "timestamp": "20250319_231950",
+  "original": {
+    "time": 0.028930187225341797,
+    "threat_types": {
+      "Normal": 0,
+      "Anomaly": 0,
+      "Zero-Day Attack": 0
+    },
+    "risk": "LOW RISK",
+    "error": "Failed to run"
+  },
+  "pyod": {
+    "time": 6.445634841918945,
+    "threat_types": {
+      "Normal": 9,
+      "Anomaly": 1,
+      "Zero-Day": 0
+    },
+    "risk": "MEDIUM RISK - Multiple Anomalies Detected",
+    "error": null
+  }
+}

@@ -1,0 +1,405 @@
+/* Enhanced Zomato Admin Dashboard CSS */
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+:root {
+    --primary-color: #cb202d;
+    --primary-light: #ff4c59;
+    --primary-dark: #960015;
+    --secondary-color: #33373d;
+    --accent-color: #f8b700;
+    --light-gray: #f5f5f5;
+    --medium-gray: #e0e0e0;
+    --dark-gray: #666;
+    --text-color: #333;
+    --success-color: #4caf50;
+    --warning-color: #ff9800;
+    --danger-color: #f44336;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+}
+
+body {
+    background-color: #f9f9f9;
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Header Styles */
+header {
+    background-color: white;
+    box-shadow: var(--shadow);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    border-bottom: 1px solid var(--medium-gray);
+}
+
+.logo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.logo h1 {
+    color: var(--primary-color);
+    font-size: 2.2rem;
+    font-weight: 700;
+    letter-spacing: -1px;
+    margin-bottom: -5px;
+}
+
+.logo p {
+    color: var(--secondary-color);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--secondary-color);
+    font-weight: 500;
+    font-size: 1.05rem;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: var(--transition);
+}
+
+nav a:hover {
+    color: var(--primary-color);
+    background-color: rgba(203, 32, 45, 0.08);
+}
+
+/* Main Content Styles */
+main {
+    padding: 30px 0;
+}
+
+main h2 {
+    color: var(--secondary-color);
+    font-size: 1.8rem;
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--primary-light);
+    display: inline-block;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
+    gap: 25px;
+    margin-bottom: 30px;
+}
+
+.dashboard-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition: var(--transition);
+    padding: 20px;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.dashboard-card h3 {
+    color: var(--primary-dark);
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.dashboard-card h3::before {
+    content: "";
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+}
+
+/* Table Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    font-size: 0.95rem;
+}
+
+thead {
+    background-color: var(--light-gray);
+}
+
+th {
+    text-align: left;
+    padding: 12px 15px;
+    border-bottom: 2px solid var(--medium-gray);
+    color: var(--secondary-color);
+    font-weight: 600;
+}
+
+td {
+    padding: 12px 15px;
+    border-bottom: 1px solid var(--medium-gray);
+}
+
+tbody tr:nth-child(even) {
+    background-color: rgba(245, 245, 245, 0.5);
+}
+
+tbody tr {
+    transition: var(--transition);
+}
+
+tbody tr:hover {
+    background-color: rgba(203, 32, 45, 0.05);
+}
+
+/* Form Elements */
+form {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+select, input, button {
+    padding: 8px 12px;
+    border-radius: 4px;
+    border: 1px solid var(--medium-gray);
+    font-size: 0.95rem;
+    outline: none;
+    transition: var(--transition);
+}
+
+select:focus, input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(203, 32, 45, 0.2);
+}
+
+.btn {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.btn:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+}
+
+/* Status Colors */
+td:nth-child(5) {
+    font-weight: 600;
+}
+
+tr:has(td:nth-child(5):contains("Pending")) td:nth-child(5) {
+    color: var(--warning-color);
+}
+
+tr:has(td:nth-child(5):contains("Processing")) td:nth-child(5) {
+    color: var(--accent-color);
+}
+
+tr:has(td:nth-child(5):contains("Delivered")) td:nth-child(5) {
+    color: var(--success-color);
+}
+
+tr:has(td:nth-child(5):contains("Cancelled")) td:nth-child(5) {
+    color: var(--danger-color);
+}
+
+/* Admin Actions Section */
+.admin-actions {
+    padding: 15px;
+    background-color: rgba(244, 67, 54, 0.05);
+    border-radius: 6px;
+    margin-top: 10px;
+}
+
+.admin-actions p {
+    margin-bottom: 10px;
+    color: var(--danger-color);
+    font-weight: 500;
+}
+
+.admin-actions ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.admin-actions a {
+    display: block;
+    text-decoration: none;
+    color: var(--text-color);
+    background-color: white;
+    padding: 10px 15px;
+    border-radius: 4px;
+    border: 1px solid var(--medium-gray);
+    transition: var(--transition);
+}
+
+.admin-actions a:hover {
+    background-color: var(--danger-color);
+    color: white;
+    border-color: var(--danger-color);
+}
+
+/* Footer Styles */
+footer {
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 40px;
+    border-top: 1px solid var(--medium-gray);
+    color: var(--dark-gray);
+    font-size: 0.9rem;
+}
+
+/* Responsive Styles */
+@media (max-width: 1200px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px;
+    }
+    
+    nav ul {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+    
+    .dashboard-card {
+        overflow-x: auto;
+    }
+    
+    table {
+        min-width: 650px;
+    }
+}
+
+@media (max-width: 480px) {
+    main {
+        padding: 20px 0;
+    }
+    
+    .dashboard-card {
+        padding: 15px;
+    }
+    
+    .logo h1 {
+        font-size: 1.8rem;
+    }
+}
+
+/* Animation Effects */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.dashboard-card {
+    animation: fadeIn 0.5s ease forwards;
+}
+
+.dashboard-card:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.dashboard-card:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.dashboard-card:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.dashboard-card:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--light-gray);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--dark-gray);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-color);
+}
+
+/* Focus Visible for Accessibility */
+:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* Print Media Query */
+@media print {
+    header, footer, .admin-actions {
+        display: none;
+    }
+    
+    body {
+        background: white;
+    }
+    
+    .dashboard-card {
+        break-inside: avoid;
+        box-shadow: none;
+        margin-bottom: 20px;
+        border: 1px solid #ddd;
+    }
+}

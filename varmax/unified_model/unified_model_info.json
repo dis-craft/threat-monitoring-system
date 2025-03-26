@@ -1,0 +1,96 @@
+{
+  "datasets": [
+    "kdd",
+    "train",
+    "unsw"
+  ],
+  "models": {
+    "kdd": {
+      "path": "kdd_model.h5",
+      "features": 41,
+      "classes": 5,
+      "feature_names": [
+        "feature_kdd_0",
+        "feature_kdd_1",
+        "feature_kdd_2",
+        "feature_kdd_3",
+        "feature_kdd_4",
+        "feature_kdd_5",
+        "feature_kdd_6",
+        "feature_kdd_7",
+        "feature_kdd_8",
+        "feature_kdd_9",
+        "feature_kdd_10",
+        "feature_kdd_11",
+        "feature_kdd_12",
+        "feature_kdd_13",
+        "feature_kdd_14",
+        "feature_kdd_15",
+        "feature_kdd_16",
+        "feature_kdd_17",
+        "feature_kdd_18",
+        "feature_kdd_19"
+      ]
+    },
+    "train": {
+      "path": "train_model.h5",
+      "features": 78,
+      "classes": 2,
+      "feature_names": [
+        "feature_train_0",
+        "feature_train_1",
+        "feature_train_2",
+        "feature_train_3",
+        "feature_train_4",
+        "feature_train_5",
+        "feature_train_6",
+        "feature_train_7",
+        "feature_train_8",
+        "feature_train_9",
+        "feature_train_10",
+        "feature_train_11",
+        "feature_train_12",
+        "feature_train_13",
+        "feature_train_14",
+        "feature_train_15",
+        "feature_train_16",
+        "feature_train_17",
+        "feature_train_18",
+        "feature_train_19"
+      ]
+    },
+    "unsw": {
+      "path": "unsw_model.h5",
+      "features": 44,
+      "classes": 10,
+      "feature_names": [
+        "feature_unsw_0",
+        "feature_unsw_1",
+        "feature_unsw_2",
+        "feature_unsw_3",
+        "feature_unsw_4",
+        "feature_unsw_5",
+        "feature_unsw_6",
+        "feature_unsw_7",
+        "feature_unsw_8",
+        "feature_unsw_9",
+        "feature_unsw_10",
+        "feature_unsw_11",
+        "feature_unsw_12",
+        "feature_unsw_13",
+        "feature_unsw_14",
+        "feature_unsw_15",
+        "feature_unsw_16",
+        "feature_unsw_17",
+        "feature_unsw_18",
+        "feature_unsw_19"
+      ]
+    }
+  },
+  "anomaly_detectors": {
+    "kdd_isoforest": "kdd_isoforest.joblib",
+    "train_isoforest": "train_isoforest.joblib",
+    "unsw_isoforest": "unsw_isoforest.joblib"
+  },
+  "timestamp": "20250320_101010"
+}

@@ -1,0 +1,147 @@
+<!-- Save this as templates/admin.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zomato Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <h1>Zomato</h1>
+                <p>Admin Dashboard</p>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                    <li><a href="{{ url_for('admin_dashboard') }}">Admin Panel</a></li>
+                    <li><a href="{{ url_for('security_scan') }}">Security</a></li>
+                    <li><a href="{{ url_for('security_monitor') }}">Vulnerability Monitor</a></li>
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                </ul>
+            </nav>
+        </header>
+        
+        <main>
+            <h2>Admin Dashboard</h2>
+            
+            <div class="dashboard-grid">
+                <!-- Security Dashboard Card (New) -->
+                <div class="dashboard-card" style="grid-column: span 2;">
+                    <h3><i class="fas fa-shield-alt"></i> Security Dashboard</h3>
+                    <p>Monitor and scan your application for security vulnerabilities using the OWASP ZAP integration.</p>
+                    <div style="margin-top: 15px; display: flex; gap: 10px;">
+                        <a href="{{ url_for('security_scan') }}" class="btn" style="background-color: #ff5252; color: white; text-decoration: none; padding: 8px 15px; border-radius: 4px; display: inline-block;">
+                            <i class="fas fa-bug"></i> View Security Dashboard
+                        </a>
+                        <a href="{{ url_for('security_monitor') }}" class="btn" style="background-color: #333; color: white; text-decoration: none; padding: 8px 15px; border-radius: 4px; display: inline-block;">
+                            <i class="fas fa-terminal"></i> Live Vulnerability Monitor
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="dashboard-card">
+                    <h3>Users</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in users %}
+                            <tr>
+                                <td>{{ user.id }}</td>
+                                <td>{{ user.username }}</td>
+                                <td>{{ user.email }}</td>
+                                <td>{{ user.role }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="dashboard-card">
+                    <h3>Restaurants</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Address</th>
+                                <th>Cuisine</th>
+                                <th>Rating</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for restaurant in restaurants %}
+                            <tr>
+                                <td>{{ restaurant.id }}</td>
+                                <td>{{ restaurant.name }}</td>
+                                <td>{{ restaurant.address }}</td>
+                                <td>{{ restaurant.cuisine }}</td>
+                                <td>{{ restaurant.rating }}/5</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="dashboard-card">
+                    <h3>Order Management</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>User</th>
+                                <th>Restaurant</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in orders %}
+                            <tr>
+                                <td>{{ order.id }}</td>
+                                <td>{{ order.username }}</td>
+                                <td>{{ order.restaurant_name }}</td>
+                                <td>${{ order.total_price }}</td>
+                                <td>{{ order.status }}</td>
+                               
+                                <td>
+                                    <!-- Vulnerable form without CSRF protection -->
+                                    <form action="{{ url_for('process_order') }}" method="post">
+                                        <input type="hidden" name="order_id" value="{{ order.id }}">
+                                        <select name="status">
+                                            <option value="Pending" {% if order.status == 'Pending' %}selected{% endif %}>Pending</option>
+                                            <option value="Processing" {% if order.status == 'Processing' %}selected{% endif %}>Processing</option>
+                                            <option value="Delivered" {% if order.status == 'Delivered' %}selected{% endif %}>Delivered</option>
+                                            <option value="Cancelled" {% if order.status == 'Cancelled' %}selected{% endif %}>Cancelled</option>
+                                        </select>
+                                        <button type="submit" class="btn">Update</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                
+              
+            </div>
+        </main>
+        
+        <footer>
+            <p>&copy; 2025 Zomato Restaurant Dashboard. For educational purposes only.</p>
+        </footer>
+    </div>
+</body>
+</html>  <!-- Vulnerable form

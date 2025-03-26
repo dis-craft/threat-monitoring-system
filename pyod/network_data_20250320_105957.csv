@@ -1,0 +1,2 @@
+timestamp,packet_time,protocol,src_mac,dst_mac,src_ip,dst_ip,src_port,dst_port,packet_size,ip_version,ip_ttl,ip_flags,tcp_flags,tcp_window,icmp_type,icmp_code,payload_size,has_payload
+2025-03-20 10:59:57.470,1742448597.469692,UNKNOWN,7c:5a:1c:cd:e6:9c,ff:ff:ff:ff:ff:ff,,,,,60,,,,,,,,46,1

@@ -1,0 +1,220 @@
+{% extends 'base.html' %}
+
+{% block title %}Zomato - Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="jumbotron">
+                <h1 class="display-4">Welcome, {{ session.username }}!</h1>
+                <p class="lead">Manage your restaurants, orders and reviews all in one place.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Restaurants Section -->
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">Popular Restaurants</h5>
+                </div>
+                <div class="card-body">
+                    <div class="list-group">
+                        {% for restaurant in restaurants %}
+                        <div class="list-group-item">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">{{ restaurant.name }}</h5>
+                                <small>Rating: {{ restaurant.rating }}</small>
+                            </div>
+                            <p class="mb-1">{{ restaurant.cuisine }}</p>
+                            <small>{{ restaurant.address }}</small>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Reviews Section -->
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">Recent Reviews</h5>
+                </div>
+                <div class="card-body">
+                    <div class="list-group">
+                        {% for review in reviews %}
+                        <div class="list-group-item">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">{{ review.restaurant_name }}</h5>
+                                <small>{{ review.date }}</small>
+                            </div>
+                            <p class="mb-1">{{ review.comment|safe }}</p>
+                            <small>By {{ review.username }} - Rating: {{ review.rating }}/5</small>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#reviewModal">
+                        Add Review
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Orders Section -->
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-header bg-warning">
+                    <h5 class="mb-0">Recent Orders</h5>
+                </div>
+                <div class="card-body">
+                    <div class="list-group">
+                        {% for order in orders %}
+                        <div class="list-group-item">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">{{ order.restaurant_name }}</h5>
+                                <small>{{ order.date }}</small>
+                            </div>
+                            <p class="mb-1">{{ order.items }}</p>
+                            <div class="d-flex w-100 justify-content-between">
+                                <small>${{ order.total_price }}</small>
+                                <span class="badge {% if order.status == 'Delivered' %}badge-success{% else %}badge-warning{% endif %}">
+                                    {{ order.status }}
+                                </span>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#orderModal">
+                        Place Order
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Additional Dashboard Features -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Security Features</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">Network Security</h5>
+                                    <p class="card-text">Monitor your network traffic for suspicious activity.</p>
+                                    <a href="{{ url_for('anomaly_detection_dashboard') }}" class="btn btn-danger">Network Anomaly Detection</a>
+                                </div>
+                            </div>
+                        </div>
+                        {% if session.role == 'admin' %}
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">Security Scan</h5>
+                                    <p class="card-text">Run security scans to identify vulnerabilities.</p>
+                                    <a href="{{ url_for('security_scan') }}" class="btn btn-warning">Run Security Scan</a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Review Modal -->
+<div class="modal fade" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="reviewModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="reviewModalLabel">Add Review</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="{{ url_for('add_review') }}" method="post">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="restaurant_id">Restaurant</label>
+                        <select class="form-control" id="restaurant_id" name="restaurant_id" required>
+                            {% for restaurant in restaurants %}
+                            <option value="{{ restaurant.id }}">{{ restaurant.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="rating">Rating</label>
+                        <select class="form-control" id="rating" name="rating" required>
+                            <option value="5">5 - Excellent</option>
+                            <option value="4">4 - Very Good</option>
+                            <option value="3">3 - Good</option>
+                            <option value="2">2 - Fair</option>
+                            <option value="1">1 - Poor</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="comment">Comment</label>
+                        <textarea class="form-control" id="comment" name="comment" rows="3" required></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Submit Review</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Order Modal -->
+<div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="orderModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="orderModalLabel">Place Order</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="{{ url_for('process_order') }}" method="post">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="order_restaurant_id">Restaurant</label>
+                        <select class="form-control" id="order_restaurant_id" name="restaurant_id" required>
+                            {% for restaurant in restaurants %}
+                            <option value="{{ restaurant.id }}">{{ restaurant.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="items">Items</label>
+                        <textarea class="form-control" id="items" name="items" rows="3" required></textarea>
+                        <small class="form-text text-muted">Enter items separated by comma, e.g., "Pizza, Coke, Salad"</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="total_price">Total Price ($)</label>
+                        <input type="number" class="form-control" id="total_price" name="total_price" step="0.01" min="1" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Place Order</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

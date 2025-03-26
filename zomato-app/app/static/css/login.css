@@ -1,0 +1,435 @@
+/* Enhanced Zomato Login Page CSS */
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+:root {
+    --primary-color: #cb202d;
+    --primary-light: #ff4c59;
+    --primary-dark: #960015;
+    --secondary-color: #33373d;
+    --accent-color: #f8b700;
+    --light-gray: #f5f5f5;
+    --medium-gray: #e0e0e0;
+    --dark-gray: #666;
+    --text-color: #333;
+    --success-color: #4caf50;
+    --warning-color: #ff9800;
+    --danger-color: #f44336;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+}
+
+body {
+    background-color: #f9f9f9;
+    background-image: linear-gradient(135deg, #f9f9f9 0%, #f5f5f5 100%);
+    color: var(--text-color);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+    width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header Styles */
+header {
+    background-color: white;
+    box-shadow: var(--shadow);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    border-bottom: 1px solid var(--medium-gray);
+}
+
+.logo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.logo h1 {
+    color: var(--primary-color);
+    font-size: 2.2rem;
+    font-weight: 700;
+    letter-spacing: -1px;
+    margin-bottom: -5px;
+}
+
+.logo p {
+    color: var(--secondary-color);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--secondary-color);
+    font-weight: 500;
+    font-size: 1.05rem;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: var(--transition);
+}
+
+nav a:hover {
+    color: var(--primary-color);
+    background-color: rgba(203, 32, 45, 0.08);
+}
+
+/* Main Content Styles */
+main {
+    padding: 30px 0;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Login Form Styles */
+.login-form {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    width: 100%;
+    max-width: 450px;
+    text-align: center;
+    animation: fadeIn 0.6s ease-out;
+    position: relative;
+    overflow: hidden;
+}
+
+.login-form::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
+}
+
+.login-form h2 {
+    color: var(--secondary-color);
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+    position: relative;
+    display: inline-block;
+}
+
+.login-form h2::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 3px;
+    background-color: var(--primary-color);
+    border-radius: 3px;
+}
+
+.form-group {
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--secondary-color);
+    font-size: 0.95rem;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--medium-gray);
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: var(--transition);
+    background-color: var(--light-gray);
+}
+
+.form-group input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(203, 32, 45, 0.15);
+    background-color: white;
+}
+
+.form-group button {
+    width: 100%;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 13px;
+    border-radius: 6px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-group button:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(203, 32, 45, 0.2);
+}
+
+.form-group button:active {
+    transform: translateY(0);
+}
+
+.form-group button::after {
+    content: "→";
+    font-size: 1.2rem;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: var(--transition);
+}
+
+.form-group button:hover::after {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Error Message */
+.error {
+    background-color: rgba(244, 67, 54, 0.1);
+    border-left: 4px solid var(--danger-color);
+    color: var(--danger-color);
+    padding: 12px 15px;
+    margin-bottom: 25px;
+    border-radius: 0 4px 4px 0;
+    font-size: 0.95rem;
+    font-weight: 500;
+    animation: shake 0.5s ease;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+/* Login Hint */
+.login-hint {
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px dashed var(--medium-gray);
+    font-size: 0.85rem;
+    color: var(--dark-gray);
+    text-align: left;
+}
+
+.login-hint p {
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    line-height: 1.5;
+}
+
+.login-hint p:last-child {
+    color: var(--danger-color);
+    font-weight: 500;
+}
+
+.login-hint p::before {
+    content: "ⓘ";
+    margin-right: 8px;
+    font-size: 1rem;
+}
+
+/* Input Focus Effects */
+.form-group {
+    position: relative;
+}
+
+.form-group label {
+    transition: var(--transition);
+}
+
+.form-group input:focus + label,
+.form-group input:not(:placeholder-shown) + label {
+    color: var(--primary-color);
+}
+
+/* Password Toggle */
+.form-group:nth-child(2) {
+    position: relative;
+}
+
+.form-group:nth-child(2)::after {
+    content: "👁️";
+    position: absolute;
+    right: 15px;
+    top: 45px;
+    cursor: pointer;
+    color: var(--dark-gray);
+    opacity: 0.7;
+    transition: var(--transition);
+    font-size: 1.1rem;
+}
+
+.form-group:nth-child(2):hover::after {
+    opacity: 1;
+}
+
+/* Footer Styles */
+footer {
+    text-align: center;
+    padding: 20px 0;
+    border-top: 1px solid var(--medium-gray);
+    color: var(--dark-gray);
+    font-size: 0.9rem;
+}
+
+/* Animation Effects */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px;
+    }
+    
+    nav ul {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+    
+    .login-form {
+        padding: 30px 20px;
+        max-width: 90%;
+    }
+}
+
+@media (max-width: 480px) {
+    .login-form {
+        padding: 25px 15px;
+    }
+    
+    .login-form h2 {
+        font-size: 1.6rem;
+    }
+    
+    .logo h1 {
+        font-size: 1.8rem;
+    }
+}
+
+/* Light Pattern Background */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(var(--medium-gray) 1px, transparent 1px);
+    background-size: 20px 20px;
+    opacity: 0.3;
+    z-index: -1;
+}
+
+/* Interactive Form Effects */
+@keyframes inputFocus {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.form-group input:focus {
+    border-image: linear-gradient(120deg, var(--primary-color), var(--accent-color)) 1;
+    animation: inputFocus 2s ease infinite;
+    background-size: 200% 200%;
+}
+
+/* Accessibility Improvements */
+:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* Custom Placeholder Color */
+::placeholder {
+    color: #aaa;
+    opacity: 1;
+}
+
+/* Floating Label Effect (Optional) */
+.form-group label {
+    position: absolute;
+    top: 12px;
+    left: 15px;
+    background-color: transparent;
+    transition: 0.2s ease all;
+    pointer-events: none;
+}
+
+.form-group input:focus ~ label,
+.form-group input:not(:placeholder-shown) ~ label {
+    top: -10px;
+    left: 10px;
+    font-size: 0.8rem;
+    background-color: white;
+    padding: 0 5px;
+}
+
+/* Print Media Query */
+@media print {
+    .login-form {
+        box-shadow: none;
+        border: 1px solid #ddd;
+    }
+    
+    body::before {
+        display: none;
+    }
+    
+    footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+    }
+}

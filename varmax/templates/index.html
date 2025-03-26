@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VARMAX - Live Network Anomaly Detection</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="static/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <i class="bi bi-shield-lock"></i> VARMAX Analytics
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#dashboard"><i class="bi bi-speedometer2"></i> Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#anomalies"><i class="bi bi-exclamation-triangle"></i> Anomalies</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#model-info"><i class="bi bi-info-circle"></i> Model Info</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <div class="badge bg-light text-dark me-3 px-3 py-2">
+                        <i class="bi bi-clock"></i> <span id="current-time"></span>
+                    </div>
+                    <button class="btn btn-sm btn-outline-light" id="theme-toggle">
+                        <i class="bi bi-moon-stars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                        <h4><i class="bi bi-activity"></i> Live Network Traffic Analysis</h4>
+                        <span class="badge bg-light text-primary px-3 py-2" id="model-status">Model Ready</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <form id="test-form" class="mb-4">
+                                    <div class="card mb-3">
+                                        <div class="card-header">
+                                            <h5>Live Network Traffic Analysis</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="mb-3">
+                                                <label for="test-data-path" class="form-label">Detection Dataset:</label>
+                                                <select id="test-data-path" class="form-select">
+                                                    <option value="live_detection">Live Network Traffic</option>
+                                                    <option value="kdd">KDD Dataset</option>
+                                                    <option value="unsw">UNSW-NB15 Dataset</option>
+                                                </select>
+                                                <div class="form-text">Select dataset model to apply to network traffic</div>
+                                            </div>
+                                            
+                                            <div class="mb-3">
+                                                <button type="button" class="btn btn-link w-100 text-decoration-none" id="advanced-settings-toggle" data-bs-toggle="collapse" data-bs-target="#advanced-settings">
+                                                    <i class="bi bi-chevron-down"></i> Show Advanced Settings
+                                                </button>
+                                                <div id="advanced-settings" class="collapse mt-3">
+                                                    <div class="row mb-3">
+                                                        <div class="col-md-6">
+                                                            <label for="anomaly-probability" class="form-label">Anomaly Probability:</label>
+                                                            <input type="number" id="anomaly-probability" class="form-control" value="0.2" min="0" max="1" step="0.1">
+                                                            <div class="form-text">Probability of generating anomalies</div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label for="batch-size" class="form-label">Batch Size:</label>
+                                                            <input type="number" id="batch-size" class="form-control" value="50" min="10" max="500">
+                                                            <div class="form-text">Connections per batch</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-3">
+                                                        <div class="col-md-6">
+                                                            <label for="duration" class="form-label">Duration (sec):</label>
+                                                            <input type="number" id="duration" class="form-control" value="30" min="5" max="300">
+                                                            <div class="form-text">Runtime duration</div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label for="interval" class="form-label">Interval (sec):</label>
+                                                            <input type="number" id="interval" class="form-control" value="0.5" min="0.1" max="5" step="0.1">
+                                                            <div class="form-text">Time between batches</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <button type="submit" class="btn btn-primary w-100">
+                                                <i class="bi bi-play-fill"></i> Start Live Detection
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div id="result-message"></div>
+                                    <div id="loading-indicator" style="display: none;">
+                                        <div class="text-center p-3">
+                                            <div class="spinner-border text-primary" role="status"></div>
+                                            <p class="mt-2" id="loading-text">Processing...</p>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="row mb-4">
+                                    <div class="col-md-4 mb-3">
+                                        <div class="card h-100 stat-card normal">
+                                            <div class="card-body text-center">
+                                                <h5>Normal Traffic</h5>
+                                                <h2 id="normal-count">-</h2>
+                                                <div class="progress">
+                                                    <div id="normal-progress" class="progress-bar bg-success" style="width: 0%"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="card h-100 stat-card anomaly">
+                                            <div class="card-body text-center">
+                                                <h5>Anomalies</h5>
+                                                <h2 id="anomaly-count">-</h2>
+                                                <div class="progress">
+                                                    <div id="anomaly-progress" class="progress-bar bg-warning" style="width: 0%"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="card h-100 stat-card zeroday">
+                                            <div class="card-body text-center">
+                                                <h5>Zero-Day Threats</h5>
+                                                <h2 id="zeroday-count">-</h2>
+                                                <div class="progress">
+                                                    <div id="zeroday-progress" class="progress-bar bg-danger" style="width: 0%"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="card h-100">
+                                            <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                                                <h5 class="mb-0">Threat Distribution</h5>
+                                                <button class="btn btn-sm btn-outline-secondary" id="toggle-chart-view">
+                                                    <i class="bi bi-arrow-repeat"></i>
+                                                </button>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="chart-container">
+                                                    <canvas id="threat-chart" height="200"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="card h-100">
+                                            <div class="card-header bg-light">
+                                                <h5 class="mb-0">Risk Assessment</h5>
+                                            </div>
+                                            <div class="card-body">
+                                                <div id="risk-badge" class="alert alert-success mb-3">
+                                                    <i class="bi bi-shield-check me-2"></i>
+                                                    <span id="risk-text">LOW RISK - No Analysis Yet</span>
+                                                </div>
+                                                <div class="d-flex justify-content-between">
+                                                    <div class="text-center">
+                                                        <h6>Total Records</h6>
+                                                        <h3 id="total-records" class="mb-0">-</h3>
+                                                    </div>
+                                                    <div class="text-center">
+                                                        <h6>Analysis Time</h6>
+                                                        <h3 id="analysis-time" class="mb-0">-</h3>
+                                                        <small>seconds</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="anomalies" class="row mb-4">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h4><i class="bi bi-exclamation-triangle"></i> Detected Threats</h4>
+                    </div>
+                    <div class="card-body">
+                        <div id="threat-stats" class="mb-3">
+                            <!-- Threat statistics will be inserted here -->
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-funnel"></i></span>
+                                    <select id="threat-filter" class="form-select">
+                                        <option value="all">All Connections</option>
+                                        <option value="true">Anomalies Only</option>
+                                        <option value="false">Normal Traffic Only</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <span class="input-group-text">Sort By:</span>
+                                    <select id="sort-by" class="form-select">
+                                        <option value="id">ID</option>
+                                        <option value="confidence" selected>Confidence</option>
+                                        <option value="timestamp">Timestamp</option>
+                                    </select>
+                                    <button class="btn btn-outline-secondary" id="sort-direction">
+                                        <i class="bi bi-sort-down"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-7">
+                                <div id="threats-container" class="threats-list">
+                                    <div class="text-center py-5">
+                                        <i class="bi bi-shield-check fs-1 text-muted"></i>
+                                        <p class="mt-3 text-muted">No network traffic analyzed yet. Start live detection to see results.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div id="anomaly-details" class="anomaly-details">
+                                    <div class="anomaly-header">
+                                        <i class="bi bi-info-circle me-2"></i> Connection Details
+                                    </div>
+                                    <div class="anomaly-body">
+                                        <h5 id="anomaly-title">Select a connection to view details</h5>
+                                        <div class="mb-3">
+                                            <label class="fw-bold">Connection Type:</label>
+                                            <div id="anomaly-type" class="mt-1">-</div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="fw-bold">Detection Confidence:</label>
+                                            <div id="anomaly-confidence-value" class="mt-1">-</div>
+                                            <div class="confidence-indicator mt-2">
+                                                <div id="anomaly-confidence" class="confidence-level" style="width: 0%"></div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="fw-bold">Network Details:</label>
+                                            <div id="connection-details" class="mt-2">
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <strong>Source:</strong> <span id="source-ip">-</span>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <strong>Destination:</strong> <span id="dest-ip">-</span>
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-2">
+                                                    <div class="col-6">
+                                                        <strong>Protocol:</strong> <span id="protocol">-</span>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <strong>Service:</strong> <span id="service">-</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="fw-bold">Key Contributing Features:</label>
+                                            <div id="anomaly-features" class="features-list mt-2">
+                                                <p class="text-muted">No feature data available</p>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="fw-bold">Model Predictions:</label>
+                                            <div id="model-predictions" class="mt-2">
+                                                <p class="text-muted">No prediction data available</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="model-info" class="row mb-4">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h4><i class="bi bi-info-circle"></i> Model Information</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h5>VARMAX Enhanced Detection Engine</h5>
+                                <p>An advanced ensemble model for network anomaly detection that combines deep learning with specialized anomaly detection techniques.</p>
+                                
+                                <div class="card mb-3">
+                                    <div class="card-header bg-light">
+                                        <h6 class="mb-0">Model Architecture</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <ul>
+                                            <li>Input batch normalization and feature scaling</li>
+                                            <li>Deep neural network with three hidden layers (256→128→64 neurons)</li>
+                                            <li>ReLU activation with dropout (0.3) for regularization</li>
+                                            <li>Batch normalization between layers for stability</li>
+                                            <li>Softmax output layer for classification confidence</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                
+                                <div class="card mb-3">
+                                    <div class="card-header bg-light">
+                                        <h6 class="mb-0">Advanced Anomaly Detection</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>The system uses a weighted ensemble approach combining:</p>
+                                        <ul>
+                                            <li><strong>Deep Learning Models:</strong> Dataset-specific neural networks</li>
+                                            <li><strong>Isolation Forest:</strong> Identifies outliers through random partitioning</li>
+                                            <li><strong>Local Outlier Factor:</strong> Density-based detection of local deviations</li>
+                                            <li><strong>ECOD:</strong> Empirical Cumulative Distribution-based Outlier Detection</li>
+                                            <li><strong>HBOS:</strong> Histogram-based Outlier Score for fast detection</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                
+                                <div class="card">
+                                    <div class="card-header bg-light">
+                                        <h6 class="mb-0">Zero-Day Threat Detection</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>The system uses ensemble disagreement and feature importance analysis to identify previously unseen attack patterns:</p>
+                                        <ol>
+                                            <li>Deep learning models and supervised classifiers assess normal/known patterns</li>
+                                            <li>Unsupervised anomaly detectors flag suspicious behavior</li>
+                                            <li>Disagreement between these components suggests novel attack vectors</li>
+                                            <li>Feature importance ranking helps identify the underlying cause</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h5>Training Datasets</h5>
+                                <div class="card mb-3">
+                                    <div class="card-header bg-light">
+                                        <h6 class="mb-0">KDD Dataset</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>Classic network intrusion detection dataset featuring various attack types including DoS, probe, U2R, and R2L.</p>
+                                        <div id="kdd-info">
+                                            <div class="d-flex justify-content-center">
+                                                <div class="spinner-border text-primary" role="status">
+                                                    <span class="visually-hidden">Loading...</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="card mb-3">
+                                    <div class="card-header bg-light">
+                                        <h6 class="mb-0">Preprocessed Training Data</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>General network traffic data with both normal patterns and various anomalous behaviors.</p>
+                                        <div id="train-info">
+                                            <div class="d-flex justify-content-center">
+                                                <div class="spinner-border text-primary" role="status">
+                                                    <span class="visually-hidden">Loading...</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="card">
+                                    <div class="card-header bg-light">
+                                        <h6 class="mb-0">UNSW-NB15 Dataset</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>Modern attack types including reconnaissance, backdoors, DoS, exploits, and shellcode.</p>
+                                        <div id="unsw-info">
+                                            <div class="d-flex justify-content-center">
+                                                <div class="spinner-border text-primary" role="status">
+                                                    <span class="visually-hidden">Loading...</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card mt-3">
+                                    <div class="card-header bg-light">
+                                        <h6 class="mb-0">PyOD Models</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div id="pyod-models-list"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Status Messages -->
+    <div id="status-container" class="position-fixed bottom-0 end-0 p-3" style="z-index: 1050">
+        <div id="error-message" class="alert alert-danger alert-dismissible fade d-none" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+            <span id="error-text"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <div id="success-message" class="alert alert-success alert-dismissible fade d-none" role="alert">
+            <i class="bi bi-check-circle-fill me-2"></i>
+            <span id="success-text"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="position-fixed top-0 start-0 w-100 h-100 d-none" style="background: rgba(0,0,0,0.5); z-index: 1100">
+        <div class="position-absolute top-50 start-50 translate-middle text-center text-white">
+            <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <h5 class="mt-3" id="loading-text">Processing data...</h5>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-center text-white py-4 mt-5">
+        <div class="container">
+            <p class="mb-1">VARMAX Advanced Anomaly Detection System</p>
+            <small>© 2025 VARMAX Analytics | All Rights Reserved</small>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="static/script.js"></script>
+</body>
+</html> 

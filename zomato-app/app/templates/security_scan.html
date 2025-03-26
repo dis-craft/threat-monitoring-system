@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Scan Results - Zomato Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/scan_results.css') }}">
+    <style>
+        .switch-dashboard {
+            display: inline-block;
+            margin-top: 20px;
+            background-color: #333;
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        .switch-dashboard:hover {
+            background-color: #555;
+        }
+        .switch-dashboard i {
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <h1><i class="fas fa-shield-alt"></i> Zomato Security Dashboard</h1>
+                <div class="nav-links">
+                    <a href="{{ url_for('main.dashboard') }}"><i class="fas fa-home"></i> Dashboard</a>
+                    <a href="{{ url_for('admin.admin_dashboard') }}"><i class="fas fa-user-shield"></i> Admin Panel</a>
+                    <a href="{{ url_for('admin.security_monitor') }}"><i class="fas fa-terminal"></i> Vulnerability Monitor</a>
+                    <a href="{{ url_for('auth.logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="card" style="margin-top: 20px;">
+            <div class="card-header">
+                <h2 class="card-title"><i class="fas fa-bug"></i> OWASP ZAP Vulnerability Scanner</h2>
+                <a href="{{ url_for('admin.security_monitor') }}" class="switch-dashboard">
+                    <i class="fas fa-terminal"></i> Switch to Live Monitoring
+                </a>
+            </div>
+            <div class="card-body">
+                <p>This security dashboard uses the OWASP ZAP (Zed Attack Proxy) to automatically scan your Zomato application for security vulnerabilities. The scanner identifies issues like:</p>
+                <ul style="margin-bottom: 20px;">
+                    <li><strong>SQL Injection:</strong> Attackers can manipulate your database queries</li>
+                    <li><strong>Cross-Site Scripting (XSS):</strong> Malicious scripts injected into web pages</li>
+                    <li><strong>Authentication Weaknesses:</strong> Problems with login systems</li>
+                    <li><strong>Information Disclosure:</strong> Sensitive data accidentally exposed</li>
+                    <li><strong>And many more security vulnerabilities...</strong></li>
+                </ul>
+                
+                <p>The system will categorize issues by risk level and provide detailed information on how to fix them.</p>
+            </div>
+        </div>
+
+        <div id="scan-status-container" style="display: none;" class="card">
+            <div class="card-header">
+                <h2 class="card-title">Scan Status</h2>
+            </div>
+            <div class="card-body">
+                <div id="scan-progress">
+                    <p id="status-message">Scan in progress...</p>
+                    <div class="progress-bar">
+                        <div id="progress-inner" class="progress-inner" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="results-container">
+            <!-- Scan results will be loaded here by JavaScript -->
+            <div class="no-results">
+                <i class="fas fa-search"></i>
+                <h2>Loading Scan Results...</h2>
+                <p>Please wait while we retrieve vulnerability information.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer style="text-align: center; margin-top: 30px; padding: 20px; color: #666; border-top: 1px solid #eee;">
+        <div class="container">
+            <p>OWASP ZAP Security Scanner Integration | Zomato Security Team</p>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='scan_results.js') }}"></script>
+</body>
+</html> 

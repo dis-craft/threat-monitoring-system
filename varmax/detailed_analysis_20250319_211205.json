@@ -1,0 +1,182 @@
+{
+  "analysis_timestamp": "20250319_211205",
+  "data_source": "C:\\Users\\sachi\\OneDrive\\Desktop\\VARMAX 1\\preprocessed_test_data.csv",
+  "records_analyzed": 5,
+  "models_used": [
+    "kdd",
+    "train",
+    "unsw"
+  ],
+  "threat_distribution": {
+    "Zero-Day": 5,
+    "Normal": 8,
+    "Anomaly": 2
+  },
+  "detailed_threats": [
+    {
+      "model": "kdd",
+      "attack_type": "Zero-Day",
+      "severity": 0.35265880823135376,
+      "confidence": 35.265880823135376,
+      "prediction_probabilities": {
+        "normal": 0.326442688703537,
+        "anomaly": 0.32089853286743164,
+        "zero_day": 0.35265880823135376
+      }
+    },
+    {
+      "model": "train",
+      "attack_type": "Normal",
+      "severity": 0.3887196183204651,
+      "confidence": 38.87196183204651,
+      "prediction_probabilities": {
+        "normal": 0.3887196183204651,
+        "anomaly": 0.2771152853965759,
+        "zero_day": 0.334165096282959
+      }
+    },
+    {
+      "model": "unsw",
+      "attack_type": "Anomaly",
+      "severity": 0.3457236886024475,
+      "confidence": 34.57236886024475,
+      "prediction_probabilities": {
+        "normal": 0.34152117371559143,
+        "anomaly": 0.3457236886024475,
+        "zero_day": 0.31275516748428345
+      }
+    },
+    {
+      "model": "kdd",
+      "attack_type": "Zero-Day",
+      "severity": 0.35134053230285645,
+      "confidence": 35.134053230285645,
+      "prediction_probabilities": {
+        "normal": 0.3206596374511719,
+        "anomaly": 0.3279998004436493,
+        "zero_day": 0.35134053230285645
+      }
+    },
+    {
+      "model": "train",
+      "attack_type": "Normal",
+      "severity": 0.38089752197265625,
+      "confidence": 38.089752197265625,
+      "prediction_probabilities": {
+        "normal": 0.38089752197265625,
+        "anomaly": 0.2886694371700287,
+        "zero_day": 0.33043304085731506
+      }
+    },
+    {
+      "model": "unsw",
+      "attack_type": "Normal",
+      "severity": 0.3494813144207001,
+      "confidence": 34.94813144207001,
+      "prediction_probabilities": {
+        "normal": 0.3494813144207001,
+        "anomaly": 0.33674585819244385,
+        "zero_day": 0.3137728273868561
+      }
+    },
+    {
+      "model": "kdd",
+      "attack_type": "Zero-Day",
+      "severity": 0.3604971468448639,
+      "confidence": 36.04971468448639,
+      "prediction_probabilities": {
+        "normal": 0.3096378445625305,
+        "anomaly": 0.3298649787902832,
+        "zero_day": 0.3604971468448639
+      }
+    },
+    {
+      "model": "train",
+      "attack_type": "Normal",
+      "severity": 0.38208290934562683,
+      "confidence": 38.20829093456268,
+      "prediction_probabilities": {
+        "normal": 0.38208290934562683,
+        "anomaly": 0.29920652508735657,
+        "zero_day": 0.318710595369339
+      }
+    },
+    {
+      "model": "unsw",
+      "attack_type": "Normal",
+      "severity": 0.3558007776737213,
+      "confidence": 35.58007776737213,
+      "prediction_probabilities": {
+        "normal": 0.3558007776737213,
+        "anomaly": 0.32150042057037354,
+        "zero_day": 0.3226988613605499
+      }
+    },
+    {
+      "model": "kdd",
+      "attack_type": "Zero-Day",
+      "severity": 0.35371118783950806,
+      "confidence": 35.371118783950806,
+      "prediction_probabilities": {
+        "normal": 0.32262399792671204,
+        "anomaly": 0.3236648440361023,
+        "zero_day": 0.35371118783950806
+      }
+    },
+    {
+      "model": "train",
+      "attack_type": "Normal",
+      "severity": 0.38603803515434265,
+      "confidence": 38.603803515434265,
+      "prediction_probabilities": {
+        "normal": 0.38603803515434265,
+        "anomaly": 0.2783626317977905,
+        "zero_day": 0.3355993926525116
+      }
+    },
+    {
+      "model": "unsw",
+      "attack_type": "Anomaly",
+      "severity": 0.34342247247695923,
+      "confidence": 34.34224724769592,
+      "prediction_probabilities": {
+        "normal": 0.3425081670284271,
+        "anomaly": 0.34342247247695923,
+        "zero_day": 0.31406930088996887
+      }
+    },
+    {
+      "model": "kdd",
+      "attack_type": "Zero-Day",
+      "severity": 0.35212647914886475,
+      "confidence": 35.212647914886475,
+      "prediction_probabilities": {
+        "normal": 0.32187625765800476,
+        "anomaly": 0.3259972035884857,
+        "zero_day": 0.35212647914886475
+      }
+    },
+    {
+      "model": "train",
+      "attack_type": "Normal",
+      "severity": 0.3831830322742462,
+      "confidence": 38.31830322742462,
+      "prediction_probabilities": {
+        "normal": 0.3831830322742462,
+        "anomaly": 0.28486478328704834,
+        "zero_day": 0.33195218443870544
+      }
+    },
+    {
+      "model": "unsw",
+      "attack_type": "Normal",
+      "severity": 0.3462168872356415,
+      "confidence": 34.62168872356415,
+      "prediction_probabilities": {
+        "normal": 0.3462168872356415,
+        "anomaly": 0.34026679396629333,
+        "zero_day": 0.3135162591934204
+      }
+    }
+  ]
+}

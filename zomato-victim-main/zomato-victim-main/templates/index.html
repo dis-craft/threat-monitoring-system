@@ -1,0 +1,46 @@
+<!-- templates/index.html -->
+{% extends 'base.html' %}
+
+{% block title %}Zomato - Home{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="jumbotron">
+        <h1 class="display-4">Welcome to Zomato!</h1>
+        <p class="lead">Discover the best food & drinks in your area</p>
+        <hr class="my-4">
+        <p>Order food from your favorite restaurants and track deliveries in real-time.</p>
+        <a class="btn btn-primary btn-lg" href="{{ url_for('login') }}" role="button">Get Started</a>
+    </div>
+    
+    <div class="row mt-5">
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body text-center">
+                    <i class="fas fa-utensils fa-4x mb-3 text-primary"></i>
+                    <h5 class="card-title">Wide Selection</h5>
+                    <p class="card-text">Choose from thousands of restaurants serving diverse cuisines.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body text-center">
+                    <i class="fas fa-shipping-fast fa-4x mb-3 text-success"></i>
+                    <h5 class="card-title">Fast Delivery</h5>
+                    <p class="card-text">Get your favorite meals delivered quickly to your doorstep.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body text-center">
+                    <i class="fas fa-star fa-4x mb-3 text-warning"></i>
+                    <h5 class="card-title">Top-Rated</h5>
+                    <p class="card-text">Discover the highest-rated restaurants based on customer reviews.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

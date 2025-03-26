@@ -1,0 +1,2 @@
+Test Data,Max Samples,Total Samples,Detected Threats,Models Used,Normal Count,Anomaly Count,Zero-Day Count
+C:\Users\sachi\OneDrive\Desktop\VARMAX 1\KDD_Test_preprocessed.csv,1000,1000,1191,"kdd, train, unsw",1809,331,860
